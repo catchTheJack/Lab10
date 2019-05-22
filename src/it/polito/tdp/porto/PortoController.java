@@ -2,6 +2,7 @@ package it.polito.tdp.porto;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.porto.model.Author;
@@ -42,6 +43,11 @@ public class PortoController {
 
     @FXML
     void handleCoautori(ActionEvent event) {
+    	txtResult.clear();
+    	List<Author> collaborazioni = new ArrayList<Author>(model.collab(boxPrimo.getValue()));
+    	for(Author temp: collaborazioni) {
+    		txtResult.appendText(temp.toString()+"\n");
+    	}
 
     }
 

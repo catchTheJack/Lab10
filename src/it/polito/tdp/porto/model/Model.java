@@ -2,6 +2,7 @@ package it.polito.tdp.porto.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
@@ -37,6 +38,12 @@ public class Model {
 		
 		System.out.print("GRAFO CREATO CON "+grafo.vertexSet().size()+" vertici e "+grafo.edgeSet().size()+" archi");
 		
+	}
+	
+	public List<Author> collab(Author ax){
+		int id = ax.getId();
+		ArrayList<Author> col = new ArrayList<Author>(pdao.getCollab(id).values());
+		return col;
 	}
 	
 	public ArrayList<Author> getAuthors(){

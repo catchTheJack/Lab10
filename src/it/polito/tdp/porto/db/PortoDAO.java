@@ -120,13 +120,40 @@ public class PortoDAO {
 			throw new RuntimeException("Errore Db");
 			
 		}
+	}	
 		
+	public HashMap<Integer,Author> getCollab(int id){
 		
+		HashMap<Integer,Author> autori = new HashMap<Integer,Author>();
 		
-		
-		
-		
+		final String sql = "SELECT * "
+							+ "FROM author a1 "
+							+ "WHERE a1.id IN (SELECT c2.authorid AS aut2 "
+							+ "FROM creator c1, creator c2 "
+							+ "WHERE c1.authorid != c2.authorid AND c1.eprintid=c2.eprintid AND c1.authorid = ?)";
+
+				try {
+				Connection conn = DBConnect.getConnection();
+				PreparedStatement st = conn.prepareStatement(sql);
+				st.setInt(1, id);
+				
+				ResultSet rs = st.executeQuery();
+				
+				while (rs.next()) {
+					Author author = new Author(rs.getInt("id"), rs.getString("lastname"), rs.getString("firstname"));
+					autori.put(rs.getInt("id"),author);
+				}
+				
+				return autori;
+				
+				} catch (SQLException e) {
+				 e.printStackTrace();
+				throw new RuntimeException("Errore Db");
+
+			}
+
 		
 		
 	}
+	
 }
