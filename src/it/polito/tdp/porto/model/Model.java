@@ -17,13 +17,17 @@ public class Model {
 	ArrayList<Author> autori;
 	HashMap<Integer,Author> idMap ;
 	
-	public void creaGrafo() {
+	
+	//creaGrafo è lasciato privato perchè viene richiamato automaticamente dal set model che in
+	//questo caso mentre carica le combo box genera il grafo che resta sempre lo stesso 
+	private void creaGrafo() {
 		
 		grafo = new SimpleGraph<>(DefaultEdge.class);
 		idMap = new HashMap<Integer,Author>();
+		autori = new ArrayList<Author>();
 		
 		//genero idMap
-		pdao.getAllAuthors(idMap);
+		pdao.getAllAuthors(idMap,autori);
 		
 		//aggiungo i vertici
 		Graphs.addAllVertices(grafo,idMap.values());
@@ -33,6 +37,11 @@ public class Model {
 		
 		System.out.print("GRAFO CREATO CON "+grafo.vertexSet().size()+" vertici e "+grafo.edgeSet().size()+" archi");
 		
+	}
+	
+	public ArrayList<Author> getAuthors(){
+		creaGrafo();
+		return autori;
 	}
 	
 	

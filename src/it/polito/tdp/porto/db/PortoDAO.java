@@ -73,9 +73,8 @@ public class PortoDAO {
 	}
 	
 	
-	public List<Author> getAllAuthors(HashMap<Integer,Author> map){
+	public void getAllAuthors(HashMap<Integer,Author> map, List<Author> autori){
 		
-		ArrayList<Author> autori = new ArrayList<Author>();
 		final String sql = "SELECT * FROM author";
 
 		try {
@@ -91,7 +90,6 @@ public class PortoDAO {
 				
 			}
 			
-			return autori;
 
 		} catch (SQLException e) {
 			 e.printStackTrace();
