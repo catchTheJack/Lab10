@@ -51,6 +51,15 @@ public class Model {
 		return autori;
 	}
 	
-	
+	public boolean thereIsCollab(Author a1,Author a2) {
+		boolean  collab = false;
+		int id1 = a1.getId();
+		int id2 = a2.getId();
+		
+		if(pdao.getCollab(id1).containsKey(id2)) {
+			collab = true;
+		}
+		return collab;
+	}
 	
 }

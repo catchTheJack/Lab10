@@ -53,6 +53,13 @@ public class PortoController {
 
     @FXML
     void handleSequenza(ActionEvent event) {
+    	txtResult.clear();
+    	if(model.thereIsCollab(boxPrimo.getValue(), boxSecondo.getValue())==true) {
+    		txtResult.appendText("I due autori hanno una collaborazione diretta \n Inserisci altri un altra combinazione");
+    	}
+    	else {
+    		txtResult.appendText("TODO esercitazione rimanente");
+    	}
 
     }
 
