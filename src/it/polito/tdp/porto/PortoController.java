@@ -58,7 +58,11 @@ public class PortoController {
     		txtResult.appendText("I due autori hanno una collaborazione diretta \n Inserisci altri un altra combinazione");
     	}
     	else {
-    		txtResult.appendText("TODO esercitazione rimanente");
+    		List<String> minimi = new ArrayList<String>(model.trovaCamminoMinimo(boxPrimo.getValue(), boxSecondo.getValue()));
+    		for(String temp: minimi) {
+    			txtResult.appendText(temp+"\n");
+    		}
+    		
     	}
 
     }

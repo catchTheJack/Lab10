@@ -90,6 +90,8 @@ public class PortoDAO {
 				
 			}
 			
+			conn.close();
+			
 
 		} catch (SQLException e) {
 			 e.printStackTrace();
@@ -114,6 +116,8 @@ public class PortoDAO {
 			while (rs.next()) {
 				grafo.addEdge(mappa.get(rs.getInt("aut1")),mappa.get(rs.getInt("aut2")));
 			}
+			
+			conn.close();
 
 		} catch (SQLException e) {
 			 e.printStackTrace();
@@ -144,6 +148,7 @@ public class PortoDAO {
 					autori.put(rs.getInt("id"),author);
 				}
 				
+				conn.close();
 				return autori;
 				
 				} catch (SQLException e) {
@@ -151,9 +156,38 @@ public class PortoDAO {
 				throw new RuntimeException("Errore Db");
 
 			}
+	}
+	
+	public String getTitle(int id1,int id2) {
+		
+		String titolo ="";
+		final String sql = "SELECT p.title "
+				+ "FROM paper p "
+				+ "WHERE p.eprintid "
+				+ "IN(SELECT c1.eprintid "
+				+ "FROM creator c1, creator c2 "
+				+ "WHERE c1.authorid= ? AND c2.authorid= ? )";
 
-		
-		
+			try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, id1);
+			st.setInt(2, id2);
+			
+			ResultSet rs = st.executeQuery();
+			
+			if(rs.next()) {
+				 titolo = rs.getString("title");
+			}
+			
+			conn.close();
+			return titolo;
+			
+			} catch (SQLException e) {
+			 e.printStackTrace();
+			throw new RuntimeException("Errore Db");
+
+}
 	}
 	
 }

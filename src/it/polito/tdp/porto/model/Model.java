@@ -5,10 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.jgrapht.Graph;
+import org.jgrapht.GraphPath;
 import org.jgrapht.Graphs;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
-
 import it.polito.tdp.porto.db.PortoDAO;
 
 public class Model {
@@ -60,6 +61,18 @@ public class Model {
 			collab = true;
 		}
 		return collab;
+	}
+	
+	public List<String> trovaCamminoMinimo(Author primo, Author secondo) {
+		DijkstraShortestPath<Author, DefaultEdge> dijstra = new DijkstraShortestPath<>(this.grafo) ;
+		GraphPath<Author, DefaultEdge> path = dijstra.getPath(primo,secondo) ;
+		List<Author> autori = new ArrayList<Author>( path.getVertexList()) ;
+		List<String> pubblicazioni = new ArrayList<String>();
+		for(int i=0; i<autori.size()-1;i++ ) {
+			String pubblicato = pdao.getTitle(autori.get(i).getId(),autori.get(i+1).getId());
+			pubblicazioni.add(pubblicato);
+		}
+		return pubblicazioni;
 	}
 	
 }
